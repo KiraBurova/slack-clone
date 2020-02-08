@@ -6,6 +6,8 @@ import {
 } from "react-router-dom";
 import FormComponent from './components/Form';
 
+console.log(FormComponent)
+
 const { Content } = Layout;
 
 const App = () => {
@@ -24,7 +26,7 @@ const App = () => {
             <Route path="/">
               <Row style={{ height: '100%' }} type="flex" justify="space-around" align="middle">
                 <Col span={4}>
-                  <FormComponent registration/>
+                  <FormComponent registration />
                 </Col>
               </Row>
             </Route>
