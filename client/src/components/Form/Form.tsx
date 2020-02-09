@@ -7,9 +7,10 @@ import { Link } from 'react-router-dom';
 interface FormComponentProps extends AntFormProps {
     registration?: boolean;
     registerUser: Function;
+    loginUser: Function;
 }
 
-const FormComponent = ({ form, registration, registerUser }: FormComponentProps) => {
+const FormComponent = ({ form, registration, registerUser, loginUser }: FormComponentProps) => {
     const { getFieldDecorator } = form;
 
     const handleRegisterUser = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -21,7 +22,16 @@ const FormComponent = ({ form, registration, registerUser }: FormComponentProps)
         });
     }
 
-    const loginForm = <Form layout="vertical">
+    const handleLoginUser = (e: React.FormEvent<HTMLFormElement>): void => {
+        e.preventDefault();
+        form.validateFields((err: Object, values: Object): void => {
+            if (!err) {
+                loginUser();
+            }
+        });
+    }
+
+    const loginForm = <Form layout="vertical" onSubmit={handleLoginUser}>
         <Form.Item>
             {getFieldDecorator('username', {
                 rules: [{ required: true, message: 'Please input your username!' }],

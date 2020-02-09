@@ -3,7 +3,9 @@ import { createReducer } from '@reduxjs/toolkit';
 import { actions } from '../actions';
 
 const initialState = {
-  user: {}
+  user: {
+    username: ''
+  }
 }
 
 const user = createReducer(initialState, {

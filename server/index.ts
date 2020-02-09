@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const graphQLHttp = require('express-graphql');
 const dotenv = require('dotenv');
 
-import schema from './schema';
+const schema = require('./schema');
 
 dotenv.config();
 
