@@ -3,13 +3,16 @@ import { actions } from '../../redux/actions';
 
 import FormComponent from './Form';
 
-const mapStateToProps = (state: any/*, ownProps*/) => { }
+const mapStateToProps = (state: any) => ({
+    item: 'state.item'
+})
 
-const mapDispatchToProps = { actions }
-
-console.log(actions)
+const mapDispatchToProps = (dispatch: any) => ({
+    // Let's just assume you pass user details to your action
+    registerUser: (user: any) => dispatch(actions.registerUser(user))
+})
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(FormComponent)

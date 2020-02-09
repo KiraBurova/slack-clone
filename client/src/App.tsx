@@ -6,8 +6,6 @@ import {
 } from "react-router-dom";
 import FormComponent from './components/Form';
 
-console.log(FormComponent)
-
 const { Content } = Layout;
 
 const App = () => {
