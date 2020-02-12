@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 
-import { actions } from '../actions';
+import { registerUserAction } from '../actions';
 
 const initialState = {
   user: {
@@ -9,7 +9,7 @@ const initialState = {
 }
 
 const user = createReducer(initialState, {
-  [actions.registerUser.type]: (state, action) => {
+  [registerUserAction.type]: (state, action) => {
     console.log(state)
   },
 });
