@@ -1,6 +1,9 @@
 import { GraphQLSchema } from "graphql";
-
 const { GraphQLObjectType, GraphQLString } = require('graphql');
+
+const bcrypt = require('bcrypt');
+
+import { UserModel } from './models/User';
 
 // User type
 const UserType = new GraphQLObjectType({
@@ -30,8 +33,51 @@ const Mutations = new GraphQLObjectType({
                 username: { type: GraphQLString },
                 password: { type: GraphQLString }
             },
-            resolve(username, password) {
-                console.log(username, password, 123)
+            resolve({ }, { username, password }) {
+                const saltRounds = 10;
+
+                if (!username || !password) {
+                    throw new Error('Username and password are required!');
+                }
+                if (password.length < 6) {
+                    throw new Error('Password must be minimum 6 characters!');
+                }
+
+                UserModel.findOne({ username }, (error: string, existingUser: Object) => {
+                    if (error) {
+                        throw new Error(error);
+                    }
+                    if (existingUser) {
+                        throw new Error('That username is already in use!');
+                    }
+                })
+
+                bcrypt.genSalt(saltRounds, (error: string, salt: string) => {
+                    if (error) {
+                        throw new Error(error);
+                    }
+                    bcrypt.hash(password, salt, (error: string, hash: string) => {
+                        if (error) {
+                            throw new Error(error);
+                        }
+                        else {
+                            const newUser = new UserModel({
+                                username,
+                                password: hash
+                            });
+
+                            newUser.save((error: string, user: Object) => {
+                                if (error) {
+                                    throw new Error(error);
+                                } else {
+                                    console.log(user)
+                                }
+                            })
+
+                        }
+                    })
+                })
+
             }
         },
     }
