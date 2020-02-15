@@ -31,7 +31,7 @@ const Mutations = new GraphQLObjectType({
                 password: { type: GraphQLString }
             },
             resolve(username, password) {
-                console.log(username, 123)
+                console.log(username, password, 123)
             }
         },
     }

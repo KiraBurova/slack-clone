@@ -1,41 +1,22 @@
 import React, { useState } from 'react';
-import { Form, Icon, Input, Button, Alert } from 'antd';
-import { FormComponentProps as AntFormProps } from "antd/lib/form/Form";
 import { Link } from 'react-router-dom';
-import { User } from '../../type';
 
-import gql from 'graphql-tag';
+import { Form, Icon, Input, Button, Alert } from 'antd';
+
 import { useMutation } from '@apollo/react-hooks';
 
-const REGISTER_USER = gql`
-  mutation RegisterUser($username: String!, $password: String!) {
-    registerUser(username: $username, password: $password) {
-      username,
-      password
-    }
-  }
-`;
+import { User } from '../../type';
+import { FormComponentProps } from './type';
+import { REGISTER_USER } from './mutations';
 
-interface FormComponentProps extends AntFormProps {
-    registration?: boolean;
-    loginUser: Function;
-    registerUserAction: Function;
-}
-
-interface UserInput {
-    username: string;
-    password: string;
-    repeat_password?: string;
-}
-
-const FormComponent = ({ form, registration, loginUser, registerUserAction }: FormComponentProps) => {
+const FormComponent = ({ form, registration, loginUserAction, registerUserAction }: FormComponentProps) => {
     const { getFieldDecorator } = form;
     const [validationError, setError] = useState('');
     const [registerUser] = useMutation(REGISTER_USER);
 
     const handleRegisterUser = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        form.validateFields((err: Object, values: any): void => {
+        form.validateFields((err: Object, values: User): void => {
             if (!err && values.password === values.repeat_password) {
                 setError('');
                 registerUserAction();
@@ -49,10 +30,10 @@ const FormComponent = ({ form, registration, loginUser, registerUserAction }: Fo
 
     const handleLoginUser = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        form.validateFields((err: Object, values: UserInput): void => {
+        form.validateFields((err: Object, values: User): void => {
             if (!err) {
                 setError('');
-                loginUser();
+                loginUserAction();
             } else {
 
             }
@@ -120,8 +101,6 @@ const FormComponent = ({ form, registration, loginUser, registerUserAction }: Fo
     </Form>
 
     return registration ? registrationForm : loginForm;
-    // return <div>dgdfgdfg</div>
 }
 
 export default Form.create<FormComponentProps>()(FormComponent);
-// export default FormComponent;

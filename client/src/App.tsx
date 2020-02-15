@@ -1,9 +1,11 @@
 import React from 'react';
-import { Layout, Row, Col } from 'antd';
 import {
   Switch,
   Route
 } from "react-router-dom";
+
+import { Layout, Row, Col } from 'antd';
+
 import FormComponent from './components/Form';
 
 const { Content } = Layout;
