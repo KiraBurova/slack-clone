@@ -17,6 +17,9 @@ const FormComponent = ({ form, registration, loginUserAction, registerUserAction
     const [registerUserMutation, { error }] = useMutation(REGISTER_USER, {
         onError(error) {
             return error;
+        },
+        onCompleted() {
+            console.log('success!')
         }
     });
 
@@ -106,7 +109,12 @@ const FormComponent = ({ form, registration, loginUserAction, registerUserAction
         Already registered? <Link to="/login">Login now!</Link>
     </Form>
 
-    if (error) return <Alert type="error" message={error?.message} />;
+    if (error) return (
+        <div>
+            <Button onClick={() => window.location.reload()}>Reload</Button>
+            <Alert type="error" message={error?.message} />
+        </div>
+    )
 
     return registration ? registrationForm : loginForm;
 }

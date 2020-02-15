@@ -4,6 +4,7 @@ const { GraphQLObjectType, GraphQLString } = require('graphql');
 const bcrypt = require('bcrypt');
 
 import { UserModel } from './models/User';
+import { User } from './types';
 
 // User type
 const UserType = new GraphQLObjectType({
@@ -43,7 +44,7 @@ const Mutations = new GraphQLObjectType({
                     throw new Error('Password must be minimum 6 characters!');
                 }
 
-                UserModel.findOne({ username }, (error: string, existingUser: Object) => {
+                UserModel.findOne({ username }, (error: string, existingUser: User) => {
                     if (error) {
                         throw new Error(error);
                     }
@@ -66,7 +67,7 @@ const Mutations = new GraphQLObjectType({
                                 password: hash
                             });
 
-                            newUser.save((error: string, user: Object) => {
+                            newUser.save((error: string, user: User) => {
                                 if (error) {
                                     throw new Error(error);
                                 } else {
