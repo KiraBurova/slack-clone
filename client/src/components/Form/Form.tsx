@@ -8,13 +8,13 @@ import { requiredField } from '../../helpers';
 import { minimumPasswordMessage } from '../../constants';
 import { User } from '../../type';
 import { FormComponentProps } from './types';
-import { REGISTER_USER } from './mutations';
+import { REGISTER_USER, LOGIN_USER } from './mutations';
 
 const FormComponent = ({ form, registration, loginUserAction, registerUserAction }: FormComponentProps) => {
     const history = useHistory();
     const { getFieldDecorator } = form;
     const [validationError, setError] = useState('');
-    const [registerUserMutation, { error, loading }] = useMutation(REGISTER_USER, {
+    const [registerUserMutation, { error: registerError, loading: registerLoading }] = useMutation(REGISTER_USER, {
         onError(error) {
             console.log(history)
             return error;
@@ -23,6 +23,20 @@ const FormComponent = ({ form, registration, loginUserAction, registerUserAction
             history.push('/login');
         }
     });
+    const [loginUserMutation, { error: loginError, loading: loginLoading }] = useMutation(LOGIN_USER, {
+        onError(error) {
+            return error;
+        },
+        onCompleted(data) {
+            const token = data.loginUser.token;
+
+            if (token) {
+                history.push('/chat')
+            }
+
+        }
+    });
+
 
     const handleRegisterUser = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
@@ -33,6 +47,7 @@ const FormComponent = ({ form, registration, loginUserAction, registerUserAction
                 registerUserMutation({ variables: { registerInput: { username: values.username, password: values.password } } })
             } else if (values.password && values.repeat_password && values.password !== values.repeat_password) {
                 const errorMessage = 'The passwords must match!';
+
                 setError(errorMessage);
             }
         });
@@ -40,12 +55,14 @@ const FormComponent = ({ form, registration, loginUserAction, registerUserAction
 
     const handleLoginUser = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        form.validateFields((err: Object, values: User): void => {
+        form.validateFields(['username', 'password'], (err: Object, values: User): void => {
             if (!err) {
                 setError('');
-                loginUserAction();
+                loginUserMutation({ variables: { loginInput: { username: values.username, password: values.password } } })
             } else {
+                const errorMessage = 'The passwords must match!';
 
+                setError(errorMessage);
             }
         });
     }
@@ -68,8 +85,15 @@ const FormComponent = ({ form, registration, loginUserAction, registerUserAction
                 <Input placeholder="Password" type="password" prefix={<Icon type="lock" />} />
             )}
         </Form.Item>
+        {validationError && <Form.Item>
+            <Alert type="error" message={validationError} />
+        </Form.Item>}
+        {loginError &&
+            <Form.Item>
+                <Alert type="error" message={loginError?.message} />
+            </Form.Item>}
         <Form.Item>
-            <Button htmlType="submit" type="primary" loading={loading}>Log in</Button>
+            <Button htmlType="submit" type="primary" loading={loginLoading}>Log in</Button>
         </Form.Item>
         Or <Link to="/register">register now!</Link>
     </Form>
@@ -104,12 +128,12 @@ const FormComponent = ({ form, registration, loginUserAction, registerUserAction
         {validationError && <Form.Item>
             <Alert type="error" message={validationError} />
         </Form.Item>}
-        {error &&
+        {registerError &&
             <Form.Item>
-                <Alert type="error" message={error?.message} />
+                <Alert type="error" message={registerError?.message} />
             </Form.Item>}
         <Form.Item>
-            <Button htmlType="submit" type="primary" loading={loading}>Register</Button>
+            <Button htmlType="submit" type="primary" loading={registerLoading}>Register</Button>
         </Form.Item>
         Already registered? <Link to="/login">Login now!</Link>
     </Form>

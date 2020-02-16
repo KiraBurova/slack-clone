@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const graphQLHttp = require('express-graphql');
 const { ApolloServer } = require('apollo-server-express');
+const httpHeadersPlugin = require("apollo-server-plugin-http-headers");
+
 const dotenv = require('dotenv');
 const cors = require('cors');
 
@@ -12,7 +14,15 @@ dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 const app = express();
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    plugins: [httpHeadersPlugin],
+    context: {
+        setHeaders: new Array(),
+        setCookies: new Array(),
+    }
+});
 
 app.use(cors());
 

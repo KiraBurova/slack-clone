@@ -9,6 +9,17 @@ const REGISTER_USER = gql`
   }
 `;
 
+const LOGIN_USER = gql`
+  mutation LoginUser($loginInput: LoginInput) {
+    loginUser(loginInput: $loginInput) {
+      username,
+      password,
+      token
+    }
+  }
+`;
+
 export {
-  REGISTER_USER
+  REGISTER_USER,
+  LOGIN_USER
 }
