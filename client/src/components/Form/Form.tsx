@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import { Link, useHistory } from 'react-router-dom';
 import { Form, Icon, Input, Button, Alert } from 'antd';
 
 import { useMutation } from '@apollo/react-hooks';
@@ -12,14 +11,16 @@ import { FormComponentProps } from './types';
 import { REGISTER_USER } from './mutations';
 
 const FormComponent = ({ form, registration, loginUserAction, registerUserAction }: FormComponentProps) => {
+    const history = useHistory();
     const { getFieldDecorator } = form;
     const [validationError, setError] = useState('');
-    const [registerUserMutation, { error }] = useMutation(REGISTER_USER, {
+    const [registerUserMutation, { error, loading }] = useMutation(REGISTER_USER, {
         onError(error) {
+            console.log(history)
             return error;
         },
         onCompleted() {
-            console.log('success!')
+            history.push('/login');
         }
     });
 
@@ -29,7 +30,7 @@ const FormComponent = ({ form, registration, loginUserAction, registerUserAction
             if (!err && values.password === values.repeat_password) {
                 setError('');
                 registerUserAction();
-                registerUserMutation({ variables: { username: values.username, password: values.password } })
+                registerUserMutation({ variables: { registerInput: { username: values.username, password: values.password } } })
             } else if (values.password && values.repeat_password && values.password !== values.repeat_password) {
                 const errorMessage = 'The passwords must match!';
                 setError(errorMessage);
@@ -68,7 +69,7 @@ const FormComponent = ({ form, registration, loginUserAction, registerUserAction
             )}
         </Form.Item>
         <Form.Item>
-            <Button htmlType="submit" type="primary">Log in</Button>
+            <Button htmlType="submit" type="primary" loading={loading}>Log in</Button>
         </Form.Item>
         Or <Link to="/register">register now!</Link>
     </Form>
@@ -100,22 +101,18 @@ const FormComponent = ({ form, registration, loginUserAction, registerUserAction
                 <Input placeholder="Repeat password" type="password" prefix={<Icon type="lock" />} />
             )}
         </Form.Item>
+        {validationError && <Form.Item>
+            <Alert type="error" message={validationError} />
+        </Form.Item>}
+        {error &&
+            <Form.Item>
+                <Alert type="error" message={error?.message} />
+            </Form.Item>}
         <Form.Item>
-            {validationError && <Alert type="error" message={validationError} />}
-        </Form.Item>
-        <Form.Item>
-            <Button htmlType="submit" type="primary">Register</Button>
+            <Button htmlType="submit" type="primary" loading={loading}>Register</Button>
         </Form.Item>
         Already registered? <Link to="/login">Login now!</Link>
     </Form>
-
-    if (error) return (
-        <div>
-            <Button onClick={() => window.location.reload()}>Reload</Button>
-            <Alert type="error" message={error?.message} />
-        </div>
-    )
-
     return registration ? registrationForm : loginForm;
 }
 
