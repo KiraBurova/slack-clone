@@ -99,8 +99,6 @@ module.exports = {
                 }
             });
 
-            console.log(context, 123)
-
             return {
                 username: user.username,
                 password: user.password,

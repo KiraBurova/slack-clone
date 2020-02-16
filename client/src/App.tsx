@@ -4,31 +4,28 @@ import {
   Route
 } from "react-router-dom";
 
-import { Layout, Row, Col } from 'antd';
+import { Layout } from 'antd';
 
-import FormComponent from './components/Form';
+import Auth from './screens/Authorization';
+import Registration from './screens/Registration';
+import Chat from './screens/Chat';
 
 const { Content } = Layout;
 
-const App = () => {
+const App = (): React.ReactElement => {
   return (
     <>
       <Layout style={{ height: "100vh" }}>
         <Content>
           <Switch>
-            <Route path="/login">
-              <Row style={{ height: '100%' }} type="flex" justify="space-around" align="middle">
-                <Col span={4}>
-                  <FormComponent />
-                </Col>
-              </Row>
+            <Route path="/" exact>
+              <Registration />
             </Route>
-            <Route path="/">
-              <Row style={{ height: '100%' }} type="flex" justify="space-around" align="middle">
-                <Col span={4}>
-                  <FormComponent registration />
-                </Col>
-              </Row>
+            <Route path="/login" exact>
+              <Auth />
+            </Route>
+            <Route path="/chat" exact>
+              <Chat />
             </Route>
           </Switch>
         </Content>
