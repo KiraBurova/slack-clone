@@ -16,7 +16,6 @@ const FormComponent = ({ form, registration, loginUserAction, registerUserAction
     const [validationError, setError] = useState('');
     const [registerUserMutation, { error: registerError, loading: registerLoading }] = useMutation(REGISTER_USER, {
         onError(error) {
-            console.log(history)
             return error;
         },
         onCompleted() {
@@ -58,10 +57,11 @@ const FormComponent = ({ form, registration, loginUserAction, registerUserAction
         form.validateFields(['username', 'password'], (err: Object, values: User): void => {
             if (!err) {
                 setError('');
+                loginUserAction(true);
                 loginUserMutation({ variables: { loginInput: { username: values.username, password: values.password } } })
             } else {
                 const errorMessage = 'The passwords must match!';
-
+                loginUserAction(false);
                 setError(errorMessage);
             }
         });
