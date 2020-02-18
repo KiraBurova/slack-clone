@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 const REGISTER_USER = gql`
   mutation RegisterUser($registerInput: RegisterInput) {
     registerUser(registerInput: $registerInput) {
-      username,
+      username
       password
     }
   }
@@ -12,14 +12,11 @@ const REGISTER_USER = gql`
 const LOGIN_USER = gql`
   mutation LoginUser($loginInput: LoginInput) {
     loginUser(loginInput: $loginInput) {
-      username,
-      password,
+      username
+      password
       token
     }
   }
 `;
 
-export {
-  REGISTER_USER,
-  LOGIN_USER
-}
+export { REGISTER_USER, LOGIN_USER };

@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  Switch,
-  Route
-} from "react-router-dom";
+import { Switch, Route } from 'react-router-dom';
 
 import { Layout } from 'antd';
 
@@ -15,23 +12,23 @@ const { Content } = Layout;
 const App = (): React.ReactElement => {
   return (
     <>
-      <Layout style={{ height: "100vh" }}>
+      <Layout style={{ height: '100vh' }}>
         <Content>
           <Switch>
-            <Route path="/" exact>
+            <Route path='/' exact>
               <Registration />
             </Route>
-            <Route path="/login" exact>
+            <Route path='/login' exact>
               <Auth />
             </Route>
-            <Route path="/chat" exact>
+            <Route path='/chat' exact>
               <Chat />
             </Route>
           </Switch>
         </Content>
-      </Layout >
+      </Layout>
     </>
   );
-}
+};
 
 export default App;
