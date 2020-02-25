@@ -24,7 +24,7 @@ const App = (): React.ReactElement => {
 
   return (
     <>
-      <Layout style={{ height: '100vh' }}>
+      <Layout>
         <Content>
           <Switch>
             <Route path='/' exact>

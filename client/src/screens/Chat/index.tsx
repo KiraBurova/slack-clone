@@ -15,7 +15,7 @@ const message = {
 const Chat = (): React.ReactElement => {
   return (
     <>
-      <Layout>
+      <Layout style={{ height: '100vh' }}>
         <Sider>
           <Sidebar />
         </Sider>
