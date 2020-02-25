@@ -11,16 +11,16 @@ import ProtectedRoute from './components/ProtectedRoute';
 const { Content } = Layout;
 
 const App = (): React.ReactElement => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState(localStorage.getItem('token') || '');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      setIsLoggedIn(true);
+      setToken(token);
     } else {
-      setIsLoggedIn(false);
+      setToken('');
     }
-  }, []);
+  }, [token]);
 
   return (
     <>
@@ -34,7 +34,7 @@ const App = (): React.ReactElement => {
               <Auth />
             </Route>
             <ProtectedRoute
-              isLoggedIn={isLoggedIn}
+              isLoggedIn={!!token}
               exact
               path='/chat'
               component={Chat}
