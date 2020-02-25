@@ -8,29 +8,31 @@ import store from './redux/store';
 
 import { InMemoryCache } from 'apollo-boost';
 import { ApolloClient } from 'apollo-client';
-import { ApolloLink } from 'apollo-link';
+import { ApolloLink, Operation, NextLink, FetchResult } from 'apollo-link';
 import { createHttpLink } from 'apollo-link-http';
 import { ApolloProvider } from '@apollo/react-hooks';
 
 const httpLink = createHttpLink({ uri: 'http://localhost:5000/graphql' });
 
-const afterwareLink = new ApolloLink((operation, forward) => {
-  return forward(operation).map(response => {
-    const context = operation.getContext();
-    const {
-      response: { headers },
-    } = context;
-    const tokenHeaders = context.response.headers.get('x-token');
-    if (tokenHeaders) {
-      const token = headers.get('x-token');
+const afterwareLink = new ApolloLink(
+  (operation: Operation, forward: NextLink) => {
+    return forward(operation).map((response: FetchResult) => {
+      const context = operation.getContext();
+      const {
+        response: { headers },
+      } = context;
+      const tokenHeaders = context.response.headers.get('x-token');
+      if (tokenHeaders) {
+        const token = headers.get('x-token');
 
-      if (token) {
-        localStorage.setItem('token', token);
+        if (token) {
+          localStorage.setItem('token', token);
+        }
       }
-    }
-    return response;
-  });
-});
+      return response;
+    });
+  },
+);
 
 const link = afterwareLink.concat(httpLink);
 
