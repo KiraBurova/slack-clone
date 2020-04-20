@@ -1,4 +1,9 @@
 .comment {
   background-color: white;
   border-radius: 5px;
+  margin: 10px;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
 }

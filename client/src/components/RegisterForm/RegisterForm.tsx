@@ -4,7 +4,7 @@ import { Form } from 'antd';
 
 import { useMutation } from '@apollo/react-hooks';
 
-import { User } from '../../type';
+import { UserType } from '../../types';
 import { FormComponentProps } from './types';
 import { REGISTER_USER } from './mutations';
 
@@ -27,7 +27,7 @@ const FormContainer = ({ form, registration }: FormComponentProps) => {
 
   const handleRegisterUser = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    form.validateFields((err: Object, values: User): void => {
+    form.validateFields((err: Object, values: UserType): void => {
       if (!err && values.password === values.repeat_password) {
         setError('');
         registerUserMutation({

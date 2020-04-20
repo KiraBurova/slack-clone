@@ -3,15 +3,27 @@ import { Layout } from 'antd';
 
 import Sidebar from '../../components/Sidebar';
 import MessageInput from '../../components/MessageInput';
-import Message from '../../components/Message';
+import MessageList from '../../components/MessagesList';
 
 const { Header, Footer, Sider, Content } = Layout;
 
-const message = {
-  author: 'Han Solo',
-  content: 'Content of message',
-  time: new Date().toLocaleString(),
-};
+const message = [
+  {
+    author: 'Han Solo',
+    content: 'Content of message',
+    time: new Date().toLocaleString(),
+  },
+  {
+    author: 'Han Solo',
+    content: 'Content of message',
+    time: new Date().toLocaleString(),
+  },
+  {
+    author: 'Han Solo',
+    content: 'Content of message',
+    time: new Date().toLocaleString(),
+  },
+];
 const Chat = (): React.ReactElement => {
   return (
     <>
@@ -22,11 +34,7 @@ const Chat = (): React.ReactElement => {
         <Layout>
           <Header>Header</Header>
           <Content>
-            <Message
-              time={message.time}
-              author={message.author}
-              content={message.content}
-            />
+            <MessageList messages={message} />
           </Content>
           <Footer>
             <MessageInput />

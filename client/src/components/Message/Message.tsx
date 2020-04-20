@@ -2,15 +2,11 @@ import React from 'react';
 
 import { Comment } from 'antd';
 
+import { MessageType } from '../../types';
+
 import styles from './Message.module.scss';
 
-interface Message {
-  author: string;
-  content: string;
-  time: string;
-}
-
-const Message = ({ author, content, time }: Message): React.ReactElement => {
+const Message = ({ author, content, time }: MessageType): React.ReactElement => {
   return (
     <Comment
       className={styles.comment}

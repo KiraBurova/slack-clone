@@ -4,7 +4,7 @@ import { Form } from 'antd';
 
 import { useMutation } from '@apollo/react-hooks';
 
-import { User } from '../../type';
+import { UserType } from '../../types';
 import { FormComponentProps } from './types';
 import { LOGIN_USER } from './mutations';
 
@@ -31,7 +31,7 @@ const FormContainer = ({ form, registration, loginUserAction }: FormComponentPro
 
   const handleLoginUser = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    form.validateFields(['username', 'password'], (err: Object, values: User): void => {
+    form.validateFields(['username', 'password'], (err: Object, values: UserType): void => {
       if (!err) {
         setError('');
         loginUserAction(true);
