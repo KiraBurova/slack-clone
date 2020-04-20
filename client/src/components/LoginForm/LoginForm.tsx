@@ -6,34 +6,23 @@ import { useMutation } from '@apollo/react-hooks';
 
 import { User } from '../../type';
 import { FormComponentProps } from './types';
-import { REGISTER_USER, LOGIN_USER } from './mutations';
+import { LOGIN_USER } from './mutations';
 
-import FormComponent from './FormComponent';
+import FormComponent from '../Form';
 
 const FormContainer = ({
   form,
   registration,
   loginUserAction,
-  registerUserAction,
 }: FormComponentProps) => {
   const history = useHistory();
   const [validationError, setError] = useState('');
-  const [
-    registerUserMutation,
-    { error: registerError, loading: registerLoading },
-  ] = useMutation(REGISTER_USER, {
-    onError(error) {
-      return error;
-    },
-    onCompleted() {
-      history.push('/login');
-    },
-  });
   const [
     loginUserMutation,
     { error: loginError, loading: loginLoading },
   ] = useMutation(LOGIN_USER, {
     onError(error) {
+      console.log(error);
       return error;
     },
     onCompleted(data) {
@@ -44,32 +33,6 @@ const FormContainer = ({
       }
     },
   });
-
-  const handleRegisterUser = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-    form.validateFields((err: Object, values: User): void => {
-      if (!err && values.password === values.repeat_password) {
-        setError('');
-        registerUserAction();
-        registerUserMutation({
-          variables: {
-            registerInput: {
-              username: values.username,
-              password: values.password,
-            },
-          },
-        });
-      } else if (
-        values.password &&
-        values.repeat_password &&
-        values.password !== values.repeat_password
-      ) {
-        const errorMessage = 'The passwords must match!';
-
-        setError(errorMessage);
-      }
-    });
-  };
 
   const handleLoginUser = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -98,14 +61,11 @@ const FormContainer = ({
 
   return (
     <FormComponent
-      loginError={loginError}
-      loginLoading={loginLoading}
-      registerError={registerError}
-      registerLoading={registerLoading}
+      actionError={loginError}
+      loading={loginLoading}
       validationError={validationError}
       form={form}
-      handleLoginUser={handleLoginUser}
-      handleRegisterUser={handleRegisterUser}
+      handleAction={handleLoginUser}
       registration={registration}
     />
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 
-import FormContainer from '../../components/Form';
+import RegisterForm from '../../components/RegisterForm';
 
 const Registration = (): React.ReactElement => {
   return (
@@ -12,7 +12,7 @@ const Registration = (): React.ReactElement => {
       align='middle'
     >
       <Col span={4}>
-        <FormContainer registration />
+        <RegisterForm registration />
       </Col>
     </Row>
   );

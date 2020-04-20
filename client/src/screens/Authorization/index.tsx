@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 
-import FormContainer from '../../components/Form';
+import LoginForm from '../../components/LoginForm';
 
 const Auth = (): React.ReactElement => {
   return (
@@ -12,7 +12,7 @@ const Auth = (): React.ReactElement => {
       align='middle'
     >
       <Col span={4}>
-        <FormContainer registration={false} />
+        <LoginForm registration={false} />
       </Col>
     </Row>
   );

@@ -1,1 +1,1 @@
-export { default } from './connect';
+export { default } from './FormComponent';
