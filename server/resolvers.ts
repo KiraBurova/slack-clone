@@ -25,7 +25,7 @@ module.exports = {
     },
   },
   Mutation: {
-    registerUser(_, { registerInput }) {
+    async registerUser(_, { registerInput }) {
       const { username, password } = registerInput;
       const saltRounds = 12;
 
@@ -36,38 +36,46 @@ module.exports = {
         throw new Error('Password must be minimum 6 characters!');
       }
 
-      UserModel.findOne({ username }, (error: string, existingUser: User) => {
-        if (error) {
-          throw new Error(error);
-        }
-        if (existingUser) {
-          throw new Error('That username is already in use!');
-        }
-      });
-
-      bcrypt.genSalt(saltRounds, (error: string, salt: string) => {
-        if (error) {
-          throw new Error(error);
-        }
-        bcrypt.hash(password, salt, (error: string, hash: string) => {
+      const user = await UserModel.findOne(
+        { username },
+        (error: string, existingUser: User): void => {
           if (error) {
             throw new Error(error);
-          } else {
-            const newUser = new UserModel({
-              username,
-              password: hash,
-            });
-
-            newUser.save((error: string, user: User) => {
+          }
+          if (!error && !existingUser) {
+            bcrypt.genSalt(saltRounds, (error: string, salt: string) => {
               if (error) {
                 throw new Error(error);
-              } else {
-                console.log(user);
               }
+              bcrypt.hash(password, salt, (error: string, hash: string) => {
+                if (error) {
+                  throw new Error(error);
+                } else {
+                  const newUser = new UserModel({
+                    username,
+                    password: hash,
+                  });
+
+                  newUser.save((error: string, user: User) => {
+                    if (error) {
+                      throw new Error(error);
+                    } else {
+                    }
+                  });
+                }
+              });
             });
           }
-        });
-      });
+        },
+      );
+
+      if (user) {
+        throw new Error('That username is already in use!');
+      } else {
+        return {
+          message: 'Registration successful!',
+        };
+      }
     },
     async loginUser(_, { loginInput }, context) {
       const { username, password } = loginInput;
@@ -75,7 +83,7 @@ module.exports = {
       const user = await UserModel.findOne({ username });
 
       if (!user) {
-        throw new Error('User doesnt not exists');
+        return new Error('User does not exist!');
       }
 
       const match = await bcrypt.compare(password, user.password);

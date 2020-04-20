@@ -10,53 +10,45 @@ import { LOGIN_USER } from './mutations';
 
 import FormComponent from '../Form';
 
-const FormContainer = ({
-  form,
-  registration,
-  loginUserAction,
-}: FormComponentProps) => {
+const FormContainer = ({ form, registration, loginUserAction }: FormComponentProps) => {
   const history = useHistory();
   const [validationError, setError] = useState('');
-  const [
-    loginUserMutation,
-    { error: loginError, loading: loginLoading },
-  ] = useMutation(LOGIN_USER, {
-    onError(error) {
-      console.log(error);
-      return error;
-    },
-    onCompleted(data) {
-      const token = data.loginUser.token;
+  const [loginUserMutation, { error: loginError, loading: loginLoading }] = useMutation(
+    LOGIN_USER,
+    {
+      onError(error) {
+        return error;
+      },
+      onCompleted(data) {
+        const token = data.loginUser.token;
 
-      if (token) {
-        history.push('/chat');
-      }
+        if (token) {
+          history.push('/chat');
+        }
+      },
     },
-  });
+  );
 
   const handleLoginUser = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    form.validateFields(
-      ['username', 'password'],
-      (err: Object, values: User): void => {
-        if (!err) {
-          setError('');
-          loginUserAction(true);
-          loginUserMutation({
-            variables: {
-              loginInput: {
-                username: values.username,
-                password: values.password,
-              },
+    form.validateFields(['username', 'password'], (err: Object, values: User): void => {
+      if (!err) {
+        setError('');
+        loginUserAction(true);
+        loginUserMutation({
+          variables: {
+            loginInput: {
+              username: values.username,
+              password: values.password,
             },
-          });
-        } else {
-          const errorMessage = 'The passwords must match!';
-          loginUserAction(false);
-          setError(errorMessage);
-        }
-      },
-    );
+          },
+        });
+      } else {
+        const errorMessage = 'The passwords must match!';
+        loginUserAction(false);
+        setError(errorMessage);
+      }
+    });
   };
 
   return (

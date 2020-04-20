@@ -13,19 +13,17 @@ import FormComponent from '../Form';
 const FormContainer = ({ form, registration }: FormComponentProps) => {
   const history = useHistory();
   const [validationError, setError] = useState('');
-  const [
-    registerUserMutation,
-    { error: registerError, loading: registerLoading },
-  ] = useMutation(REGISTER_USER, {
-    onError(error) {
-      console.log(error);
-      return error;
+  const [registerUserMutation, { error: registerError, loading: registerLoading }] = useMutation(
+    REGISTER_USER,
+    {
+      onError(error) {
+        return error;
+      },
+      onCompleted() {
+        history.push('/login');
+      },
     },
-    onCompleted() {
-      console.log('login');
-      history.push('/login');
-    },
-  });
+  );
 
   const handleRegisterUser = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
