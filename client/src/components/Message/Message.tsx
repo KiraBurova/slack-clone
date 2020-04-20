@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Comment } from 'antd';
 
+import styles from './Message.module.scss';
+
 interface Message {
   author: string;
   content: string;
@@ -11,6 +13,7 @@ interface Message {
 const Message = ({ author, content, time }: Message): React.ReactElement => {
   return (
     <Comment
+      className={styles.comment}
       author={<a>{author}</a>}
       content={<p>{content}</p>}
       datetime={time}
