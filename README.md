@@ -5,7 +5,6 @@
 1. Server
 
 - ~~Set cookie (or localstorage) after login on backend~~
-- Make logout functionality
 - Add sockets for chat functionality
 
 2. Client
@@ -20,3 +19,4 @@
 - Create chatroom header component (chattroom name + number of members)
 - Create profile header
 - Make logout functionality
+- Create common header (with logout button)
