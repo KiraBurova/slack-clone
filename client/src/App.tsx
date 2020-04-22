@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import { Layout } from 'antd';
+import { Layout, Button } from 'antd';
 
 import Auth from './screens/Authorization';
 import Registration from './screens/Registration';
 import Chat from './screens/Chat';
 import ProtectedRoute from './components/ProtectedRoute';
+import HeaderComponent from './components/Header';
 
 const { Content, Header } = Layout;
 
@@ -25,7 +26,7 @@ const App = (): React.ReactElement => {
   return (
     <>
       <Layout style={{ height: '100%' }}>
-        <Header>123</Header>
+        <HeaderComponent />
         <Content>
           <Switch>
             <Route path='/' exact>

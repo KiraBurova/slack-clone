@@ -18,5 +18,5 @@
 - Create add chatroom component
 - Create chatroom header component (chattroom name + number of members)
 - Create profile header
-- Make logout functionality
+- ~~Make logout functionality~~
 - Create common header (with logout button)
