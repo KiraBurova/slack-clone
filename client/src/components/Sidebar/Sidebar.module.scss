@@ -1,10 +1,15 @@
 .sidebar {
   height: 100vh;
+  // margin-top: 60px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  flex-direction: column;
 }
 .createRoom {
   display: flex;
   align-self: flex-end;
   background-color: white;
+}
+.usersHolder {
+  width: 100%;
 }

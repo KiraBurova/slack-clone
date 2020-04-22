@@ -8,7 +8,7 @@ import Registration from './screens/Registration';
 import Chat from './screens/Chat';
 import ProtectedRoute from './components/ProtectedRoute';
 
-const { Content } = Layout;
+const { Content, Header } = Layout;
 
 const App = (): React.ReactElement => {
   const [token, setToken] = useState(localStorage.getItem('token') || '');
@@ -25,6 +25,7 @@ const App = (): React.ReactElement => {
   return (
     <>
       <Layout style={{ height: '100%' }}>
+        <Header>123</Header>
         <Content>
           <Switch>
             <Route path='/' exact>
@@ -33,12 +34,7 @@ const App = (): React.ReactElement => {
             <Route path='/login' exact>
               <Auth />
             </Route>
-            <ProtectedRoute
-              isLoggedIn={!!token}
-              exact
-              path='/chat'
-              component={Chat}
-            />
+            <ProtectedRoute isLoggedIn={!!token} exact path='/chat' component={Chat} />
           </Switch>
         </Content>
       </Layout>

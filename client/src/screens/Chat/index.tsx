@@ -27,12 +27,11 @@ const message = [
 const Chat = (): React.ReactElement => {
   return (
     <>
-      <Layout style={{ height: '100vh' }}>
+      <Layout>
         <Sider>
           <Sidebar />
         </Sider>
         <Layout>
-          <Header>Header</Header>
           <Content>
             <MessageList messages={message} />
           </Content>

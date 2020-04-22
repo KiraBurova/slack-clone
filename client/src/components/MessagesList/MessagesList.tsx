@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { Comment } from 'antd';
-
 import Message from '../Message';
 
 import { MessageType } from '../../types';

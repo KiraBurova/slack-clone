@@ -15,12 +15,12 @@ const generateToken = (user: User): string => {
 
 module.exports = {
   Query: {
-    async getPosts() {
+    async users() {
       try {
-        const posts = await UserModel.find();
-        return posts;
-      } catch (err) {
-        throw new Error(err);
+        const users = await UserModel.find();
+        return users;
+      } catch (error) {
+        throw new Error(error);
       }
     },
   },

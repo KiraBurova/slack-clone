@@ -4,7 +4,7 @@
 
 1. Server
 
-- Set cookie after login on backend
+- ~~Set cookie (or localstorage) after login on backend~~
 - Make logout functionality
 - Add sockets for chat functionality
 
@@ -13,7 +13,7 @@
 - ~~Make Form component dumber (separate logic and ui)~~
 - ~~Create Protected route which checks for cookie and redirect to login if needed~~
 - ~~Create message input component~~
-- Create Sidebar component (where all chatrooms will be listed)
+- ~~Create Sidebar component (where all chatrooms will be listed)~~
 - ~~Create single message component~~
 - Create single chatroom component
 - Create add chatroom component
