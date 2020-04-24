@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { useQuery } from '@apollo/react-hooks';
 
 import CreateRoom from '../CreateRoom';
@@ -6,7 +7,7 @@ import UserItem from './UserItem';
 
 import { GET_USERS } from './query';
 
-import { UserType } from '../../types/types';
+import { UserType } from '@globalTypes/types';
 
 import styles from './Sidebar.module.scss';
 

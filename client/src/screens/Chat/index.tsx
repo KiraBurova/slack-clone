@@ -1,13 +1,13 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
+
 import { Layout } from 'antd';
-import { Link, Switch } from 'react-router-dom';
 
 import Sidebar from '../../components/Sidebar';
 import MessageInput from '../../components/Chat/Messages/MessageInput';
 import ChatComponent from '../../components/Chat';
-import { useHistory, Route } from 'react-router-dom';
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Footer, Sider, Content } = Layout;
 
 const message = [
   {

@@ -56,25 +56,13 @@ const FormComponent = ({
             { required: true, message: requiredField('password') },
             { min: 6, message: minimumPasswordMessage },
           ],
-        })(
-          <Input
-            placeholder='Password'
-            type='password'
-            prefix={<Icon type='lock' />}
-          />,
-        )}
+        })(<Input placeholder='Password' type='password' prefix={<Icon type='lock' />} />)}
       </Form.Item>
       {registration && (
         <Form.Item>
           {getFieldDecorator('repeat_password', {
             rules: [{ required: true, message: requiredField('password') }],
-          })(
-            <Input
-              placeholder='Repeat password'
-              type='password'
-              prefix={<Icon type='lock' />}
-            />,
-          )}
+          })(<Input placeholder='Repeat password' type='password' prefix={<Icon type='lock' />} />)}
         </Form.Item>
       )}
       {validationError && (

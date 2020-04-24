@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Form } from 'antd';
 
 import { useMutation } from '@apollo/react-hooks';
 
-import { UserType } from '../../types/types';
+import { Form } from 'antd';
+
+import { UserType } from '@globalTypes/types';
 import { FormComponentProps } from './types';
 import { REGISTER_USER } from './mutations';
 

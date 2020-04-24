@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Input, Icon, Button } from 'antd';
+import { Input, Button } from 'antd';
 
 import { CreateRoomProps } from './types';
 

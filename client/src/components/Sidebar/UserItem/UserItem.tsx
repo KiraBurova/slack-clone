@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { UserType } from '../../../types/types';
+import { UserType } from '@globalTypes/types';
 
 import styles from './UserItem.module.scss';
 

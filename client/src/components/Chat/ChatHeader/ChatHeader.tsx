@@ -1,9 +1,9 @@
 import React from 'react';
 import { match } from 'react-router';
 
-import { MatchParams } from '../Chat';
-
 import { PageHeader } from 'antd';
+
+import { MatchParams } from '../Chat';
 
 interface ChatHeaderProps {
   match: match<MatchParams> | null;

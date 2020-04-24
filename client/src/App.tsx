@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import { Layout, Button } from 'antd';
+import { Layout } from 'antd';
 
 import Auth from './screens/Authorization';
 import Registration from './screens/Registration';
 import Chat from './screens/Chat';
 import ProtectedRoute from './components/ProtectedRoute';
 import HeaderComponent from './components/Header';
-import ChatComponent from './components/Chat';
 
-const { Content, Header } = Layout;
+const { Content } = Layout;
 
 const App = (): React.ReactElement => {
   const [token, setToken] = useState(localStorage.getItem('token') || '');
