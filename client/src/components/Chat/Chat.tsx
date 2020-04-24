@@ -5,17 +5,37 @@ import MessageList from '../Chat/Messages/MessagesList';
 import ChatHeader from './ChatHeader';
 
 import { MessageType } from '@globalTypes/types';
+import { useSubscription } from '@apollo/react-hooks';
 
-interface ChatComponentProps {
-  messages: MessageType[];
-}
+import { MESSAGE_SUBSCRIPTION } from './mutations';
 
 export interface MatchParams {
   id: string;
 }
+const messages = [
+  {
+    author: 'Han Solo',
+    content: 'Content of message',
+    time: new Date().toLocaleString(),
+  },
+  {
+    author: 'Han Solo',
+    content: 'Content of message',
+    time: new Date().toLocaleString(),
+  },
+  {
+    author: 'Han Solo',
+    content: 'Content of message',
+    time: new Date().toLocaleString(),
+  },
+];
 
-const ChatComponent = ({ messages }: ChatComponentProps): React.ReactElement => {
+const ChatComponent = (): React.ReactElement => {
   const match = useRouteMatch<MatchParams>('/chat/:id');
+
+  const { data, loading } = useSubscription(MESSAGE_SUBSCRIPTION);
+
+  console.log(data);
 
   return (
     <>

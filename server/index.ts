@@ -1,3 +1,4 @@
+const http = require('http');
 const express = require('express');
 const mongoose = require('mongoose');
 const graphQLHttp = require('express-graphql');
@@ -25,13 +26,18 @@ const server = new ApolloServer({
 
 app.use(cors());
 
-app.listen(PORT, () => {
-  console.log('Connecting the server', PORT);
-});
-
 server.applyMiddleware({ app });
+
+const httpServer = http.createServer(app);
+server.installSubscriptionHandlers(httpServer);
 
 mongoose.connect(process.env.MONGOLAB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+});
+
+app.listen(PORT, () => {
+  console.log('Connecting the server', PORT);
+  const subPath = server.subscriptionsPath;
+  console.log(`Subscriptions are at ws://localhost:${PORT}${subPath}`);
 });

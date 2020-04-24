@@ -1,5 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { PubSub } = require('apollo-server');
+
+const pubsub = new PubSub();
 
 import { UserModel } from './models/User';
 import { User } from './types';
@@ -14,6 +17,11 @@ const generateToken = (user: User): string => {
 };
 
 module.exports = {
+  Subscription: {
+    messageSent: {
+      subscribe: () => pubsub.asyncIterator(['MESSAGE_SENT']),
+    },
+  },
   Query: {
     async users() {
       try {
@@ -100,6 +108,13 @@ module.exports = {
         username: user.username,
         password: user.password,
         token,
+      };
+    },
+
+    sendMessage(_, { messageInput }, context) {
+      pubsub.publish('MESSAGE_SENT', { MessageSent: messageInput });
+      return {
+        message: 'Message successfully sent!',
       };
     },
   },

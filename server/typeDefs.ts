@@ -6,8 +6,11 @@ module.exports = gql`
     password: String!
     token: String!
   }
-  type SuccessRespose {
+  type SuccessResponse {
     message: String!
+  }
+  type Message {
+    content: String!
   }
   input RegisterInput {
     username: String!
@@ -17,11 +20,18 @@ module.exports = gql`
     username: String!
     password: String!
   }
+  input MessageInput {
+    content: String!
+  }
   type Query {
     users: [User]
   }
   type Mutation {
-    registerUser(registerInput: RegisterInput): SuccessRespose!
+    registerUser(registerInput: RegisterInput): SuccessResponse!
     loginUser(loginInput: LoginInput): User!
+    sendMessage(messageInput: MessageInput): SuccessResponse!
+  }
+  type Subscription {
+    messageSent: Message!
   }
 `;

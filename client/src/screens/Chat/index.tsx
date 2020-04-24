@@ -9,23 +9,6 @@ import ChatComponent from '../../components/Chat';
 
 const { Footer, Sider, Content } = Layout;
 
-const message = [
-  {
-    author: 'Han Solo',
-    content: 'Content of message',
-    time: new Date().toLocaleString(),
-  },
-  {
-    author: 'Han Solo',
-    content: 'Content of message',
-    time: new Date().toLocaleString(),
-  },
-  {
-    author: 'Han Solo',
-    content: 'Content of message',
-    time: new Date().toLocaleString(),
-  },
-];
 const Chat = (): React.ReactElement => {
   return (
     <>
@@ -37,7 +20,7 @@ const Chat = (): React.ReactElement => {
           <Content>
             <Switch>
               <Route path='/chat/:id' exact>
-                <ChatComponent messages={message} />
+                <ChatComponent />
               </Route>
             </Switch>
           </Content>

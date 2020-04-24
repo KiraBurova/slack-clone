@@ -10,6 +10,7 @@ import { InMemoryCache } from 'apollo-boost';
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink, Operation, NextLink, FetchResult } from 'apollo-link';
 import { createHttpLink } from 'apollo-link-http';
+import { WebSocketLink } from 'apollo-link-ws';
 
 import { ApolloProvider } from '@apollo/react-hooks';
 
@@ -33,10 +34,18 @@ const afterwareLink = new ApolloLink((operation: Operation, forward: NextLink) =
   });
 });
 
-const link = afterwareLink.concat(httpLink);
+// Create a WebSocket link:
+const wsLink = new WebSocketLink({
+  uri: `ws://localhost:5000/graphql`,
+  options: {
+    reconnect: true,
+  },
+});
+
+const link = afterwareLink.concat(httpLink).concat(wsLink);
 
 const client = new ApolloClient({
-  link,
+  link: ApolloLink.from([afterwareLink, httpLink, wsLink]),
   cache: new InMemoryCache(),
 });
 
