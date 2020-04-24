@@ -6,7 +6,7 @@ import UserItem from './UserItem';
 
 import { GET_USERS } from './query';
 
-import { UserType } from '../../types';
+import { UserType } from '../../types/types';
 
 import styles from './Sidebar.module.scss';
 

@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-import { UserType } from '../../../types';
+import { UserType } from '../../../types/types';
 
 import styles from './UserItem.module.scss';
 
@@ -9,7 +10,11 @@ interface UserItemProps {
 }
 
 const UserItem = ({ user }: UserItemProps): React.ReactElement => {
-  return <div className={styles.user}>{user.username}</div>;
+  return (
+    <Link className={styles.user} to={`/chat/${user.username}`}>
+      {user.username}
+    </Link>
+  );
 };
 
 export default UserItem;

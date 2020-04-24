@@ -4,13 +4,13 @@ import { Form } from 'antd';
 
 import { useMutation } from '@apollo/react-hooks';
 
-import { UserType } from '../../types';
+import { UserType } from '../../types/types';
 import { FormComponentProps } from './types';
 import { REGISTER_USER } from './mutations';
 
 import FormComponent from '../Form';
 
-const FormContainer = ({ form, registration }: FormComponentProps) => {
+const FormContainer = ({ form, registration }: FormComponentProps): React.ReactElement => {
   const history = useHistory();
   const [validationError, setError] = useState('');
   const [registerUserMutation, { error: registerError, loading: registerLoading }] = useMutation(

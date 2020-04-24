@@ -3,8 +3,8 @@ import { Route, Redirect } from 'react-router-dom';
 
 interface ProtectedRouteProps {
   component: any;
-  isLoggedIn: boolean;
-  exact: boolean;
+  isLoggedIn?: boolean;
+  exact?: boolean;
   path: string;
 }
 
@@ -16,7 +16,7 @@ const ProtectedRoute = ({
   return (
     <Route
       {...rest}
-      render={props => {
+      render={(props) => {
         if (isLoggedIn) {
           return <Component {...rest} {...props} />;
         } else {

@@ -4,13 +4,17 @@ import { Form } from 'antd';
 
 import { useMutation } from '@apollo/react-hooks';
 
-import { UserType } from '../../types';
+import { UserType } from '../../types/types';
 import { FormComponentProps } from './types';
 import { LOGIN_USER } from './mutations';
 
 import FormComponent from '../Form';
 
-const FormContainer = ({ form, registration, loginUserAction }: FormComponentProps) => {
+const FormContainer = ({
+  form,
+  registration,
+  loginUserAction,
+}: FormComponentProps): React.ReactElement => {
   const history = useHistory();
   const [validationError, setError] = useState('');
   const [loginUserMutation, { error: loginError, loading: loginLoading }] = useMutation(

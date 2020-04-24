@@ -2,7 +2,7 @@ import React from 'react';
 
 import Message from '../Message';
 
-import { MessageType } from '../../types';
+import { MessageType } from '@globalTypes/types';
 
 interface MessageListProps {
   messages: MessageType[];

@@ -8,6 +8,7 @@ import Registration from './screens/Registration';
 import Chat from './screens/Chat';
 import ProtectedRoute from './components/ProtectedRoute';
 import HeaderComponent from './components/Header';
+import ChatComponent from './components/Chat';
 
 const { Content, Header } = Layout;
 
@@ -35,7 +36,7 @@ const App = (): React.ReactElement => {
             <Route path='/login' exact>
               <Auth />
             </Route>
-            <ProtectedRoute isLoggedIn={!!token} exact path='/chat' component={Chat} />
+            <ProtectedRoute isLoggedIn={!!token} path='/chat' component={Chat} />
           </Switch>
         </Content>
       </Layout>
