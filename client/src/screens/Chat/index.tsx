@@ -29,7 +29,7 @@ const message = [
 const Chat = (): React.ReactElement => {
   return (
     <>
-      <Layout>
+      <Layout style={{ height: '100%' }}>
         <Sider>
           <Sidebar />
         </Sider>
