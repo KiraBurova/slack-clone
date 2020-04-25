@@ -1,11 +1,12 @@
 import React from 'react';
 import { useRouteMatch } from 'react-router-dom';
 
+import { useSubscription } from '@apollo/react-hooks';
+
 import MessageList from '../Chat/Messages/MessagesList';
 import ChatHeader from './ChatHeader';
 
-import { MessageType } from '@globalTypes/types';
-import { useSubscription } from '@apollo/react-hooks';
+import { MessageType } from '../../types/types';
 
 import { MESSAGE_SUBSCRIPTION } from './mutations';
 

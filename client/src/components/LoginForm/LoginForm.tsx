@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/react-hooks';
 
 import { Form } from 'antd';
 
-import { UserType } from '@globalTypes/types';
+import { UserType } from '../../types/types';
 import { FormComponentProps } from './types';
 import { LOGIN_USER } from './mutations';
 

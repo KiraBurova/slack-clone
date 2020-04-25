@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Comment } from 'antd';
 
-import { MessageType } from '@globalTypes/types';
+import { MessageType } from '../../../../types/types';
 
 import styles from './Message.module.scss';
 
