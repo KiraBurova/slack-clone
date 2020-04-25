@@ -15,16 +15,19 @@ export interface MatchParams {
 }
 const messages = [
   {
+    id: '1',
     author: 'Han Solo',
     content: 'Content of message',
     time: new Date().toLocaleString(),
   },
   {
+    id: '2',
     author: 'Han Solo',
     content: 'Content of message',
     time: new Date().toLocaleString(),
   },
   {
+    id: '3',
     author: 'Han Solo',
     content: 'Content of message',
     time: new Date().toLocaleString(),

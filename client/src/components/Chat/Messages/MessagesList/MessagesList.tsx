@@ -13,7 +13,13 @@ const MessageList = ({ messages }: MessageListProps): React.ReactElement => {
     <>
       {messages.map(
         (message: MessageType): React.ReactElement => (
-          <Message author={message.author} content={message.content} time={message.time} />
+          <Message
+            key={message.id}
+            id={message.id}
+            author={message.author}
+            content={message.content}
+            time={message.time}
+          />
         ),
       )}
     </>

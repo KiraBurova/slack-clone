@@ -5,6 +5,7 @@ export interface UserType {
 }
 
 export interface MessageType {
+  id: string;
   author: string;
   content: string;
   time: string;

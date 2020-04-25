@@ -19,7 +19,7 @@ const Sidebar = (): React.ReactElement => {
   return (
     <div className={styles.sidebar}>
       <div className={styles.usersHolder}>
-        {data && data.users.map((user: UserType) => <UserItem user={user} />)}
+        {data && data.users.map((user: UserType) => <UserItem user={user} key={user.username} />)}
       </div>
       <CreateRoom className={styles.createRoom} />
     </div>
