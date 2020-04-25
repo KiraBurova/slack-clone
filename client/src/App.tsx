@@ -15,7 +15,6 @@ const App = (): React.ReactElement => {
   const [token, setToken] = useState(localStorage.getItem('token') || '');
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
     if (token) {
       setToken(token);
     } else {
@@ -30,7 +29,7 @@ const App = (): React.ReactElement => {
         <Content>
           <Switch>
             <Route path='/' exact>
-              <Registration />
+              {!!token ? <Chat /> : <Registration />}
             </Route>
             <Route path='/login' exact>
               <Auth />
