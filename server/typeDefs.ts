@@ -11,6 +11,9 @@ module.exports = gql`
   }
   type Message {
     content: String!
+    author: String!
+    time: String!
+    id: String!
   }
   input RegisterInput {
     username: String!
@@ -22,6 +25,9 @@ module.exports = gql`
   }
   input MessageInput {
     content: String!
+    author: String!
+    time: String!
+    id: String!
   }
   type Query {
     users: [User]
@@ -32,6 +38,6 @@ module.exports = gql`
     sendMessage(messageInput: MessageInput): SuccessResponse!
   }
   type Subscription {
-    messageSent: Message!
+    message: Message!
   }
 `;

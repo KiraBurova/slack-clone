@@ -2,8 +2,11 @@ import gql from 'graphql-tag';
 
 const MESSAGE_SUBSCRIPTION = gql`
   subscription onMessageSend {
-    messageSent {
+    message {
       content
+      author
+      time
+      id
     }
   }
 `;

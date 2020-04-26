@@ -18,7 +18,7 @@ const generateToken = (user: User): string => {
 
 module.exports = {
   Subscription: {
-    messageSent: {
+    message: {
       subscribe: () => pubsub.asyncIterator(['MESSAGE_SENT']),
     },
   },
@@ -112,7 +112,7 @@ module.exports = {
     },
 
     sendMessage(_, { messageInput }, context) {
-      pubsub.publish('MESSAGE_SENT', { MessageSent: messageInput });
+      pubsub.publish('MESSAGE_SENT', { message: messageInput });
       return {
         message: 'Message successfully sent!',
       };

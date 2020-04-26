@@ -21,7 +21,12 @@ const MessageInput = (): React.ReactElement => {
   const submitMessage = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     sendMessageMutation({
       variables: {
-        messageInput: { content: e.currentTarget.value },
+        messageInput: {
+          content: e.currentTarget.value,
+          id: '3',
+          author: 'Han Solo',
+          time: new Date().toLocaleString(),
+        },
       },
     });
   };
