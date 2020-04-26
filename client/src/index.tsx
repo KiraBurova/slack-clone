@@ -8,13 +8,16 @@ import store from './redux/store';
 
 import { InMemoryCache } from 'apollo-boost';
 import { ApolloClient } from 'apollo-client';
-import { ApolloLink, Operation, NextLink, FetchResult } from 'apollo-link';
-import { createHttpLink } from 'apollo-link-http';
+import { ApolloLink, Operation, NextLink, FetchResult, split } from 'apollo-link';
+import { HttpLink } from 'apollo-link-http';
 import { WebSocketLink } from 'apollo-link-ws';
+import { getMainDefinition } from 'apollo-utilities';
 
 import { ApolloProvider } from '@apollo/react-hooks';
 
-const httpLink = createHttpLink({ uri: 'http://localhost:5000/graphql' });
+const localGraphQL = 'http://localhost:4000/graphql';
+
+const httpLink = new HttpLink({ uri: localGraphQL });
 
 const afterwareLink = new ApolloLink((operation: Operation, forward: NextLink) => {
   return forward(operation).map((response: FetchResult) => {
@@ -36,16 +39,26 @@ const afterwareLink = new ApolloLink((operation: Operation, forward: NextLink) =
 
 // Create a WebSocket link:
 const wsLink = new WebSocketLink({
-  uri: `ws://localhost:5000/graphql`,
+  uri: `ws://localhost:4000/graphql`,
   options: {
     reconnect: true,
   },
 });
 
-const link = afterwareLink.concat(httpLink).concat(wsLink);
+const concattedLink = afterwareLink.concat(httpLink);
+
+const link = split(
+  // split based on operation type
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
+  },
+  wsLink,
+  concattedLink,
+);
 
 const client = new ApolloClient({
-  link: ApolloLink.from([afterwareLink, httpLink, wsLink]),
+  link: link,
   cache: new InMemoryCache(),
 });
 

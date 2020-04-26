@@ -12,9 +12,9 @@ const typeDefs = require('./typeDefs');
 const resolvers = require('./resolvers');
 
 dotenv.config();
-
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 const app = express();
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -26,18 +26,19 @@ const server = new ApolloServer({
 
 app.use(cors());
 
-server.applyMiddleware({ app });
-
-const httpServer = http.createServer(app);
-server.installSubscriptionHandlers(httpServer);
+server.applyMiddleware({
+  app,
+});
 
 mongoose.connect(process.env.MONGOLAB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-app.listen(PORT, () => {
-  console.log('Connecting the server', PORT);
-  const subPath = server.subscriptionsPath;
-  console.log(`Subscriptions are at ws://localhost:${PORT}${subPath}`);
+const httpServer = http.createServer(app);
+server.installSubscriptionHandlers(httpServer);
+
+httpServer.listen({ port: PORT }, () => {
+  console.log(`Server ready at http://localhost:${PORT}${server.graphqlPath}`);
+  console.log(`Subscriptions ready at ws://localhost:${PORT}${server.subscriptionsPath}`);
 });
