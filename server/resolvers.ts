@@ -1,11 +1,13 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+import * as Joi from 'joi';
 const { PubSub } = require('apollo-server');
 
 const pubsub = new PubSub();
 
-import { UserModel } from './models';
+import { UserModel, ChatModel } from './models';
 import { User } from './types';
+import { registerUserSchema, startChat } from './schemas';
 
 const generateToken = (user: User): string => {
   return jwt.sign(
@@ -33,15 +35,14 @@ module.exports = {
     },
   },
   Mutation: {
-    async registerUser(_, { registerInput }) {
+    async registerUser(root, { registerInput }, context, info) {
       const { username, password } = registerInput;
       const saltRounds = 12;
 
-      if (!username || !password) {
-        throw new Error('Username and password are required!');
-      }
-      if (password.length < 6) {
-        throw new Error('Password must be minimum 6 characters!');
+      try {
+        await Joi.validate(registerInput, registerUserSchema);
+      } catch (err) {
+        throw new Error(err);
       }
 
       const user = await UserModel.findOne(
@@ -116,6 +117,32 @@ module.exports = {
       return {
         message: 'Message successfully sent!',
       };
+    },
+
+    async startChat(root, args, context, info) {
+      const userId = context.req.session;
+      const { title, userIds } = args;
+
+      await Joi.validate(args, startChat(userId), { abortEarly: false });
+
+      const idsFound = await UserModel.where('_id').in(userIds).countDocuments();
+
+      if (idsFound !== userIds.length) {
+        throw new Error('One or more User Ids are invalid');
+      }
+
+      userIds.push(userId);
+
+      const chat = await ChatModel.create({ title, users: userIds });
+
+      await UserModel.updateMany(
+        { _id: { $id: userIds } },
+        {
+          $push: { chats: chat },
+        },
+      );
+
+      return chat;
     },
   },
 };
