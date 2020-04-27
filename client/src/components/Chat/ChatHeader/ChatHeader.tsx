@@ -10,7 +10,7 @@ interface ChatHeaderProps {
 }
 
 const ChatHeader = ({ match }: ChatHeaderProps): React.ReactElement => {
-  const privateChat = `Chatting with ${match?.params.id}`;
+  const privateChat = `Chatting with ${match?.params.name}`;
 
   return (
     <>

@@ -16,6 +16,7 @@
     "antd": "^3.26.8",
     "apollo-boost": "^0.4.7",
     "apollo-link": "^1.2.13",
+    "apollo-link-context": "^1.0.20",
     "apollo-link-http": "^1.5.16",
     "apollo-link-ws": "^1.0.20",
     "node-sass": "^4.13.1",

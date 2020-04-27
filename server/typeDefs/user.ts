@@ -2,7 +2,7 @@ const { gql } = require('apollo-server');
 
 export default gql`
   type User {
-    id: ID!
+    _id: ID!
     username: String!
     password: String!
     chats: [Chat!]!
@@ -22,6 +22,7 @@ export default gql`
     loginUser(loginInput: LoginInput): User!
   }
   extend type Query {
-    users: [User]
+    users: [User!]!
+    user: User!
   }
 `;

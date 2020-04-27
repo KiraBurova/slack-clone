@@ -2,7 +2,7 @@ const { gql } = require('apollo-server');
 
 export default gql`
   type Message {
-    id: ID!
+    _id: ID!
     content: String!
     author: User!
     createdAt: String!

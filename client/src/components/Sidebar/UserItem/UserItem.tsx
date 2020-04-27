@@ -11,7 +11,7 @@ interface UserItemProps {
 
 const UserItem = ({ user }: UserItemProps): React.ReactElement => {
   return (
-    <Link className={styles.user} to={`/chat/${user.username}`}>
+    <Link className={styles.user} to={`/chat/${user.username}/${user._id}`}>
       {user.username}
     </Link>
   );

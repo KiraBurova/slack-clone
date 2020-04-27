@@ -2,7 +2,7 @@ const { gql } = require('apollo-server');
 
 export default gql`
   type Chat {
-    id: String!
+    _id: String!
     title: String!
     createdAt: String!
     users: [User!]!

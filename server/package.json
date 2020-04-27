@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/joi": "^14.3.4",
+    "@types/mongoose": "^5.7.14",
     "apollo-server": "^2.10.1",
     "apollo-server-express": "^2.10.1",
     "apollo-server-plugin-http-headers": "^0.1.3",

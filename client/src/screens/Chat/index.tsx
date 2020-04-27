@@ -19,7 +19,7 @@ const Chat = (): React.ReactElement => {
         <Layout>
           <Content>
             <Switch>
-              <Route path='/chat/:id' exact>
+              <Route path='/chat/:name/:id' exact>
                 <ChatComponent />
               </Route>
             </Switch>

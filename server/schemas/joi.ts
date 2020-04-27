@@ -1,5 +1,5 @@
 import * as Joi from 'joi';
-import mongoose from 'mongoose';
+import * as mongoose from 'mongoose';
 
 const objectId = {
   name: 'string',

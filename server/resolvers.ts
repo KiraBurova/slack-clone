@@ -8,6 +8,7 @@ const pubsub = new PubSub();
 import { UserModel, ChatModel } from './models';
 import { User } from './types';
 import { registerUserSchema, startChat } from './schemas';
+import user from './typeDefs/user';
 
 const generateToken = (user: User): string => {
   return jwt.sign(
@@ -29,6 +30,14 @@ module.exports = {
       try {
         const users = await UserModel.find();
         return users;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+    async user(_, { id }) {
+      try {
+        const user = await UserModel.findById(id);
+        return user;
       } catch (error) {
         throw new Error(error);
       }

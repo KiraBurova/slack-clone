@@ -1,4 +1,5 @@
 export interface UserType {
+  _id: string;
   username: string;
   password: string;
   repeat_password?: string;
