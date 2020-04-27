@@ -8,7 +8,7 @@ const httpHeadersPlugin = require('apollo-server-plugin-http-headers');
 const dotenv = require('dotenv');
 const cors = require('cors');
 
-const typeDefs = require('./typeDefs');
+import typeDefs from './typeDefs';
 const resolvers = require('./resolvers');
 
 dotenv.config();
