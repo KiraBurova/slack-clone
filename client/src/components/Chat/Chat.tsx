@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 
-import { useSubscription, useMutation } from '@apollo/react-hooks';
+import { useSubscription, useMutation, useQuery } from '@apollo/react-hooks';
 
 import MessageList from '../Chat/Messages/MessagesList';
 import ChatHeader from './ChatHeader';
 
 import { MessageType } from '../../types/types';
 
-import { MESSAGE_SUBSCRIPTION, START_CHAT_MUTATION } from './mutations';
+import { MESSAGE_SUBSCRIPTION, START_CHAT_MUTATION, ME } from './mutations';
 
 export interface MatchParams {
   id: string;
@@ -18,15 +18,13 @@ export interface MatchParams {
 const ChatComponent = (): React.ReactElement => {
   const match = useRouteMatch<MatchParams>('/chat/:name/:id');
 
-  console.log(match);
-
   const [messages, setMessages] = useState<MessageType[]>([]);
 
-  const { data, loading, error } = useSubscription(MESSAGE_SUBSCRIPTION, {
-    onSubscriptionData(data) {
-      setMessages([...messages, data.subscriptionData.data.message]);
-    },
-  });
+  // const { data, loading, error } = useSubscription(MESSAGE_SUBSCRIPTION, {
+  //   onSubscriptionData(data) {
+  //     setMessages([...messages, data.subscriptionData.data.message]);
+  //   },
+  // });
 
   const [startChatMutation, { error: loginError, loading: loginLoading }] = useMutation(
     START_CHAT_MUTATION,
@@ -40,13 +38,15 @@ const ChatComponent = (): React.ReactElement => {
     },
   );
 
-  useEffect(() => {
-    startChatMutation({
-      variables: {
-        userIds: [match?.params.id],
-      },
-    });
-  }, [match?.params.id]);
+  const { data, error } = useQuery(ME);
+
+  // useEffect(() => {
+  //   startChatMutation({
+  //     variables: {
+  //       userIds: [match?.params.id],
+  //     },
+  //   });
+  // }, [match?.params.id]);
 
   return (
     <>

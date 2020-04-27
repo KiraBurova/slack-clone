@@ -19,4 +19,13 @@ const START_CHAT_MUTATION = gql`
   }
 `;
 
-export { MESSAGE_SUBSCRIPTION, START_CHAT_MUTATION };
+const ME = gql`
+  query Me {
+    me {
+      username
+      _id
+    }
+  }
+`;
+
+export { MESSAGE_SUBSCRIPTION, START_CHAT_MUTATION, ME };

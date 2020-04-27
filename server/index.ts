@@ -1,9 +1,8 @@
 const http = require('http');
 const express = require('express');
 const mongoose = require('mongoose');
-const graphQLHttp = require('express-graphql');
 const { ApolloServer } = require('apollo-server-express');
-const httpHeadersPlugin = require('apollo-server-plugin-http-headers');
+const jwt = require('jsonwebtoken');
 
 const dotenv = require('dotenv');
 const cors = require('cors');
@@ -15,13 +14,27 @@ dotenv.config();
 const PORT = process.env.PORT || 4000;
 const app = express();
 
+const getUser = (token: string): void => {
+  try {
+    if (token) {
+      return jwt.verify(token, process.env.SECRET_KEY);
+    }
+    return null;
+  } catch (error) {
+    return null;
+  }
+};
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req, res }) => ({
-    req,
-    res,
-  }),
+  context: ({ req }) => {
+    const token = req.headers.authorization || '';
+    const user = getUser(token);
+
+    return {
+      user,
+    };
+  },
 });
 
 app.use(cors());

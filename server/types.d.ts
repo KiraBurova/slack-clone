@@ -1,5 +1,6 @@
 export interface User {
-    username: string;
-    password: string;
-    repeat_password?: string;
+  _id: string;
+  username: string;
+  password: string;
+  repeat_password?: string;
 }

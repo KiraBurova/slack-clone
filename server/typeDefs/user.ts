@@ -23,6 +23,7 @@ export default gql`
   }
   extend type Query {
     users: [User!]!
-    user: User!
+    user(id: ID!): User!
+    me: User!
   }
 `;

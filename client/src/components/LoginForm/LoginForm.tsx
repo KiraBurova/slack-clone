@@ -26,6 +26,7 @@ const FormContainer = ({
       },
       onCompleted(data) {
         const token = data.loginUser.token;
+        localStorage.setItem('token', token);
 
         if (token) {
           history.push('/chat');

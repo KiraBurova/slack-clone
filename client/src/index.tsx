@@ -12,6 +12,7 @@ import { ApolloLink, Operation, NextLink, FetchResult, split } from 'apollo-link
 import { HttpLink } from 'apollo-link-http';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
+import { setContext } from 'apollo-link-context';
 
 import { ApolloProvider } from '@apollo/react-hooks';
 
@@ -19,24 +20,17 @@ const localGraphQL = 'http://localhost:4000/graphql';
 
 const httpLink = new HttpLink({ uri: localGraphQL });
 
-const afterwareLink = new ApolloLink((operation: Operation, forward: NextLink) => {
-  return forward(operation).map((response: FetchResult) => {
-    const context = operation.getContext();
-    const {
-      response: { headers },
-    } = context;
-    const tokenHeaders = context.response.headers.get('x-token');
-    if (tokenHeaders) {
-      const token = headers.get('x-token');
-
-      if (token) {
-        localStorage.setItem('token', token);
-      }
-    }
-    return response;
-  });
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem('token');
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? token : '',
+    },
+  };
 });
-
 // Create a WebSocket link:
 const wsLink = new WebSocketLink({
   uri: `ws://localhost:4000/graphql`,
@@ -45,7 +39,7 @@ const wsLink = new WebSocketLink({
   },
 });
 
-const concattedLink = afterwareLink.concat(httpLink);
+const concattedLink = authLink.concat(httpLink);
 
 const link = split(
   // split based on operation type

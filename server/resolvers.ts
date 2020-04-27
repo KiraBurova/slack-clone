@@ -13,6 +13,7 @@ import user from './typeDefs/user';
 const generateToken = (user: User): string => {
   return jwt.sign(
     {
+      _id: user._id,
       username: user.username,
     },
     process.env.SECRET_KEY,
@@ -41,6 +42,9 @@ module.exports = {
       } catch (error) {
         throw new Error(error);
       }
+    },
+    me: (root, args, context, info) => {
+      return UserModel.findById(context.user._id);
     },
   },
   Mutation: {
@@ -111,12 +115,11 @@ module.exports = {
       }
 
       const token = generateToken(user);
-      context.res.set('Access-Control-Expose-Headers', 'x-token');
-      context.res.set('x-token', token);
 
       return {
         username: user.username,
         password: user.password,
+        _id: user._id,
         token,
       };
     },
