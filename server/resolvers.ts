@@ -4,7 +4,7 @@ const { PubSub } = require('apollo-server');
 
 const pubsub = new PubSub();
 
-import { UserModel } from './models/User';
+import { UserModel } from './models';
 import { User } from './types';
 
 const generateToken = (user: User): string => {

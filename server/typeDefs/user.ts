@@ -5,8 +5,8 @@ export default gql`
     id: ID!
     username: String!
     password: String!
-    token: String!
     chats: [Chat!]!
+    token: String!
   }
 
   input RegisterInput {

@@ -2,20 +2,16 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema(
+const ChatSchema = new Schema(
   {
-    username: {
+    title: {
       type: String,
       required: true,
     },
-    password: {
-      type: String,
-      required: true,
-    },
-    chats: [
+    users: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Chat',
+        ref: 'User',
       },
     ],
   },
@@ -24,6 +20,6 @@ const UserSchema = new Schema(
   },
 );
 
-const UserModel = mongoose.model('User', UserSchema);
+const ChatModel = mongoose.model('Chat', ChatSchema);
 
-export default UserModel;
+export default ChatModel;
