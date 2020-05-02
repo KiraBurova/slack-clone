@@ -1,21 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { ApolloError } from 'apollo-boost';
-
 import { Form, Icon, Input, Button, Alert } from 'antd';
 
 import { requiredField } from '../../helpers';
 import { minimumPasswordMessage } from '../../constants';
 
-interface FormComponentProp {
-  form: any;
-  registration: boolean;
-  handleAction: (event: React.FormEvent<HTMLFormElement>) => void;
-  validationError: string;
-  actionError: ApolloError | undefined;
-  loading: boolean;
-}
+import { FormComponentProp } from './types';
 
 const FormComponent = ({
   form,

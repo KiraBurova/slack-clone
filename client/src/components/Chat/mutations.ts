@@ -1,16 +1,5 @@
 import gql from 'graphql-tag';
 
-const MESSAGE_SUBSCRIPTION = gql`
-  subscription onMessageSend {
-    message {
-      content
-      author
-      time
-      id
-    }
-  }
-`;
-
 const START_CHAT_MUTATION = gql`
   mutation startChat($userIds: [ID!]!) {
     startChat(userIds: $userIds) {
@@ -19,13 +8,4 @@ const START_CHAT_MUTATION = gql`
   }
 `;
 
-const ME = gql`
-  query Me {
-    me {
-      username
-      _id
-    }
-  }
-`;
-
-export { MESSAGE_SUBSCRIPTION, START_CHAT_MUTATION, ME };
+export { START_CHAT_MUTATION };

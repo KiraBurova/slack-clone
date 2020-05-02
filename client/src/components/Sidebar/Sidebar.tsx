@@ -3,16 +3,16 @@ import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
 import CreateRoom from '../CreateRoom';
-import UserItem from './UserItem';
+import UserItem from '../UserItem';
 
-import { GET_USERS } from './query';
+import { GET_USERS_QUERY } from './queries';
 
 import { UserType } from '../../types/types';
 
 import styles from './Sidebar.module.scss';
 
 const Sidebar = (): React.ReactElement => {
-  const { loading, error, data } = useQuery(GET_USERS);
+  const { loading, error, data } = useQuery(GET_USERS_QUERY);
 
   return (
     <div className={styles.sidebar}>

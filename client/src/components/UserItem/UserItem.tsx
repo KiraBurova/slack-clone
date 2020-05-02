@@ -1,13 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { UserType } from '../../../types/types';
+import { UserItemProps } from './types';
 
 import styles from './UserItem.module.scss';
-
-interface UserItemProps {
-  user: UserType;
-}
 
 const UserItem = ({ user }: UserItemProps): React.ReactElement => {
   return (

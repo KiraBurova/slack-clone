@@ -7,7 +7,8 @@ import { Form } from 'antd';
 
 import { UserType } from '../../types/types';
 import { FormComponentProps } from './types';
-import { REGISTER_USER } from './mutations';
+
+import { REGISTER_USER_MUTATION } from './mutations';
 
 import FormComponent from '../Form';
 
@@ -15,7 +16,7 @@ const FormContainer = ({ form, registration }: FormComponentProps): React.ReactE
   const history = useHistory();
   const [validationError, setError] = useState('');
   const [registerUserMutation, { error: registerError, loading: registerLoading }] = useMutation(
-    REGISTER_USER,
+    REGISTER_USER_MUTATION,
     {
       onError(error) {
         return error;

@@ -7,7 +7,8 @@ import { Form } from 'antd';
 
 import { UserType } from '../../types/types';
 import { FormComponentProps } from './types';
-import { LOGIN_USER } from './mutations';
+
+import { LOGIN_USER_MUTATION } from './mutations';
 
 import FormComponent from '../Form';
 
@@ -19,7 +20,7 @@ const FormContainer = ({
   const history = useHistory();
   const [validationError, setError] = useState('');
   const [loginUserMutation, { error: loginError, loading: loginLoading }] = useMutation(
-    LOGIN_USER,
+    LOGIN_USER_MUTATION,
     {
       onError(error) {
         return error;

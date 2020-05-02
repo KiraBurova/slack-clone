@@ -7,13 +7,11 @@ import MessageList from '../Chat/Messages/MessagesList';
 import ChatHeader from './ChatHeader';
 
 import { MessageType } from '../../types/types';
+import { MatchParams } from './types';
 
-import { MESSAGE_SUBSCRIPTION, START_CHAT_MUTATION, ME } from './mutations';
-
-export interface MatchParams {
-  id: string;
-  name: string;
-}
+import { START_CHAT_MUTATION } from './mutations';
+import { ME_QUERY } from './queries';
+import { MESSAGE_SUBSCRIPTION } from './subscriptions';
 
 const ChatComponent = (): React.ReactElement => {
   const match = useRouteMatch<MatchParams>('/chat/:name/:id');
@@ -38,7 +36,7 @@ const ChatComponent = (): React.ReactElement => {
     },
   );
 
-  const { data, error } = useQuery(ME);
+  const { data, error } = useQuery(ME_QUERY);
 
   // useEffect(() => {
   //   startChatMutation({

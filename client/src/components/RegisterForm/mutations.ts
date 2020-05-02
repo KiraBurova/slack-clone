@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-const REGISTER_USER = gql`
+const REGISTER_USER_MUTATION = gql`
   mutation RegisterUser($registerInput: RegisterInput) {
     registerUser(registerInput: $registerInput) {
       message
@@ -8,4 +8,4 @@ const REGISTER_USER = gql`
   }
 `;
 
-export { REGISTER_USER };
+export { REGISTER_USER_MUTATION };
