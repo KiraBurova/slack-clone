@@ -26,9 +26,10 @@ module.exports = {
     },
   },
   Query: {
-    async users(): Promise<any> {
+    async users(root, args, context, info): Promise<any> {
+      const currentUser = context.user._id;
       try {
-        const users = await UserModel.find();
+        const users = await UserModel.find({ _id: { $ne: currentUser } });
         return users;
       } catch (error) {
         throw new Error(error);
