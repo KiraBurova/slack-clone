@@ -8,7 +8,6 @@ const pubsub = new PubSub();
 import { UserModel, ChatModel } from './models';
 import { User } from './types';
 import { registerUserSchema, startChat } from './schemas';
-import user from './typeDefs/user';
 
 const generateToken = (user: User): string => {
   return jwt.sign(
@@ -27,7 +26,7 @@ module.exports = {
     },
   },
   Query: {
-    async users() {
+    async users(): Promise<any> {
       try {
         const users = await UserModel.find();
         return users;
@@ -35,7 +34,7 @@ module.exports = {
         throw new Error(error);
       }
     },
-    async user(_, { id }) {
+    async user(_, { id }): Promise<any> {
       try {
         const user = await UserModel.findById(id);
         return user;
@@ -43,12 +42,12 @@ module.exports = {
         throw new Error(error);
       }
     },
-    me: (root, args, context, info) => {
+    me: (root, args, context, info): Promise<any> => {
       return UserModel.findById(context.user._id);
     },
   },
   Mutation: {
-    async registerUser(root, { registerInput }, context, info) {
+    async registerUser(root, { registerInput }, context, info): Promise<any> {
       const { username, password } = registerInput;
       const saltRounds = 12;
 
@@ -99,7 +98,7 @@ module.exports = {
         };
       }
     },
-    async loginUser(_, { loginInput }, context) {
+    async loginUser(_, { loginInput }, context): Promise<any> {
       const { username, password } = loginInput;
 
       const user = await UserModel.findOne({ username });
@@ -124,37 +123,55 @@ module.exports = {
       };
     },
 
-    sendMessage(_, { messageInput }, context) {
+    sendMessage(_, { messageInput }, context): Object {
       pubsub.publish('MESSAGE_SENT', { message: messageInput });
       return {
         message: 'Message successfully sent!',
       };
     },
 
-    async startChat(root, args, context, info) {
-      const userId = context.req.session;
-      const { title, userIds } = args;
+    async startChat(root, { secondUserId }, context, info): Promise<any> {
+      const currentUserId = context.user._id;
 
-      await Joi.validate(args, startChat(userId), { abortEarly: false });
+      const currentUser = await UserModel.findById(currentUserId);
+      const secondUser = await UserModel.findById(secondUserId);
 
-      const idsFound = await UserModel.where('_id').in(userIds).countDocuments();
+      const title = `${currentUser.username} and ${secondUser.username}`;
 
-      if (idsFound !== userIds.length) {
-        throw new Error('One or more User Ids are invalid');
+      try {
+        await Joi.validate({ currentUserId, secondUserId, title }, startChat);
+
+        const chat = await ChatModel.create({ title, users: [currentUserId, secondUserId] });
+
+        const a = await UserModel.updateMany(
+          { _id: { $in: [currentUserId, secondUserId] } },
+          {
+            $push: { chats: chat },
+          },
+        );
+        console.log(a);
+      } catch (err) {
+        console.log(err);
       }
 
-      userIds.push(userId);
+      // const idsFound = await UserModel.where('_id').in(usersIds).countDocuments();
 
-      const chat = await ChatModel.create({ title, users: userIds });
+      // if (idsFound !== usersIds.length) {
+      //   throw new Error('One or more User Ids are invalid');
+      // }
 
-      await UserModel.updateMany(
-        { _id: { $id: userIds } },
-        {
-          $push: { chats: chat },
-        },
-      );
+      // userIds.push(userId);
 
-      return chat;
+      // const chat = await ChatModel.create({ title, users: [currentUserId, secondUserId] });
+
+      // await UserModel.updateMany(
+      //   { _id: { $id: userIds } },
+      //   {
+      //     $push: { chats: chat },
+      //   },
+      // );
+
+      // return chat;
     },
   },
 };

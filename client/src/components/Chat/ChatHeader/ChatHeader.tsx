@@ -3,7 +3,7 @@ import { match } from 'react-router';
 
 import { PageHeader } from 'antd';
 
-import { MatchParams } from '../Chat';
+import { MatchParams } from '../types';
 
 interface ChatHeaderProps {
   match: match<MatchParams> | null;

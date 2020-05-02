@@ -9,6 +9,6 @@ export default gql`
     messages: [Message!]!
   }
   extend type Mutation {
-    startChat(userIds: [ID!]!, title: String): Chat
+    startChat(secondUserId: ID!, title: String): Chat
   }
 `;

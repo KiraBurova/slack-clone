@@ -38,13 +38,15 @@ const ChatComponent = (): React.ReactElement => {
 
   const { data, error } = useQuery(ME_QUERY);
 
-  // useEffect(() => {
-  //   startChatMutation({
-  //     variables: {
-  //       userIds: [match?.params.id],
-  //     },
-  //   });
-  // }, [match?.params.id]);
+  console.log(data);
+
+  useEffect(() => {
+    startChatMutation({
+      variables: {
+        secondUserId: match?.params.id,
+      },
+    });
+  }, [match?.params.id, data]);
 
   return (
     <>

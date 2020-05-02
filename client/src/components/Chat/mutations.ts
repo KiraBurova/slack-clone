@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 const START_CHAT_MUTATION = gql`
-  mutation startChat($userIds: [ID!]!) {
-    startChat(userIds: $userIds) {
+  mutation startChat($secondUserId: ID!) {
+    startChat(secondUserId: $secondUserId) {
       title
     }
   }
